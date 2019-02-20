@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
       xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
   <nomatch>
@@ -14,6 +14,7 @@
   <!-- Data model -->
   <var name="from" />
   <var name="to" />
+  <var name="date" />
 
   <!-- State machine -->
   <form id="welcome">
@@ -51,6 +52,7 @@
       <option>new york</option>
     </field>
     <filled>
+      <assign name="to" expr="toField" />
       <goto next="#askDate" />
     </filled>
   </form>
@@ -60,8 +62,27 @@
       <promt>
 	Which day are you travelling?
       </promt>
+      <option>monday</option>
+      <option>tuesday</option>
+      <option>wedenesday</option>
     </field>
+    <filled>
+      <assign name="date" expr="dateField" />
       <goto next="#askReturn" />
+    </filled>
+  </form>
+
+  <form>
+    <field name="askReturn">
+      <promt>
+	Is it a one way trip?
+      </promt>
+      <option>yes</option>
+      <option>no</option>
+    </field>
+    <filled>
+      <goto next="#check1" />
+    </filled>
   </form>
 
 </vxml>
