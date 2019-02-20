@@ -15,6 +15,10 @@
   <var name="from" />
   <var name="to" />
   <var name="date" />
+  <var name="oneWay" />
+  <var name="isOk" />
+  <var name="dateReturn">
+
 
   <!-- State machine -->
   <form id="welcome">
@@ -35,6 +39,10 @@
       <option>london</option>
       <option>paris</option>
       <option>new york</option>
+      <nomatch>
+      You need to choose from london, paris or new york.
+        <reprompt />
+      </nomatch>
     </field>
     <filled>
       <assign name="from" expr="fromField" />
@@ -53,14 +61,22 @@
     </field>
     <filled>
       <assign name="to" expr="toField" />
+      <if cond= "to==from">
+        <promt>
+          You can't fly from and to
+          <value expr="from"/>
+          Try a different destination
+        </promt>
+      <else />
       <goto next="#askDate" />
+      </if>
     </filled>
   </form>
 
   <form id="askDate">
     <field name="dateField">
       <promt>
-	Which day are you travelling?
+	      Which day are you travelling?
       </promt>
       <option>monday</option>
       <option>tuesday</option>
@@ -72,16 +88,21 @@
     </filled>
   </form>
 
-  <form>
-    <field name="askReturn">
+  <form id="askReturn">
+    <field name="oneWay">
       <promt>
-	Is it a one way trip?
+	      Is it a one way trip?
       </promt>
       <option>yes</option>
       <option>no</option>
     </field>
     <filled>
-      <goto next="#check1" />
+      <assign name="oneWay" expr="askReturn" />
+      <if cond= "oneWay == 'yes'">
+        <goto next="#check1" />
+      <else />
+      <goto next="#askDate2" />
+      </if>
     </filled>
   </form>
 
